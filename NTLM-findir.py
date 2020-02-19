@@ -1,5 +1,3 @@
-# pip install requests_ntlm
-
 import requests
 from requests_ntlm import HttpNtlmAuth
 from getpass import getpass
@@ -33,12 +31,8 @@ word_list = open(args.wordlist, 'r')
 threads = []
 words=[]
 password = getpass()
-# print (password)
-# exit()
 def checkpassword():
     response = requests.get(args.url,auth=HttpNtlmAuth('{}\\{}'.format(args.domain,args.username),password))
-    # print('args.domain\\args.username')
-    # exit()
     if response.status_code == 401:
     	print('\n')
     	print("401 - Unauthorized: Access is denied due to invalid credentials.")
@@ -50,8 +44,6 @@ with open(args.wordlist, 'r',encoding="utf8") as file:
 	a = file.readlines()
 	for i in a:
 		words.append(i.strip())
-
-
 try:
 	def scan(word):
 			url = args.url+'/'+word
@@ -74,20 +66,8 @@ try:
 
 	with concurrent.futures.ThreadPoolExecutor(max_workers=thread_count) as executor:
 	    executor.map(scan, words)
-		   	        
-	# for word in word_list:
-	# 	striped_word = word.strip()
-	# 	t1 = threading.Thread(target=scan,args=(striped_word,))
-	# 	threads.append(t1)
-	# 	
-	
-	# for thread in threads:
-	#     thread.join()
-	# session = requests.Session()
-	# session.auth = HttpNtlmAuth('domain\\username','password')
-	# session.get('http://ntlm_protected_site.com')
-	#print("Main thread name: {}".format(threading.main_thread().name)) 
 
+	
 #If keyboard interruption happens 
 except KeyboardInterrupt:
     print("Someone pressed CTRL+C.....")
