@@ -49,7 +49,6 @@ try:
 			url = args.url+'/'+word
 			session = requests.Session()
 			session.auth = HttpNtlmAuth('{}\\{}'.format(args.domain,args.username),password)
-			#response = requests.get(url,auth=HttpNtlmAuth('nseroot\\hmt_aprasad',password))
 			response = session.get(url)
 			if response.status_code == 200:
 				print(url)
